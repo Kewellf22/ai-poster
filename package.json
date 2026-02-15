@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "remotion studio",
     "build": "remotion bundle",
-    "render": "remotion render src/index.ts CarnivalInGoa out/poster.mp4",
+    "render:video": "remotion render src/index.ts CarnivalVideo out/carnival-in-goa.mp4",
+    "render:poster": "remotion render src/index.ts CarnivalInGoa out/poster.mp4",
     "render:still": "remotion still src/index.ts CarnivalInGoa out/poster.png",
     "upgrade": "remotion upgrade"
   },
