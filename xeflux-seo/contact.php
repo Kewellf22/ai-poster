@@ -4,7 +4,6 @@
  * File: contact.php
  */
 session_start();
-require_once __DIR__ . '/seo.php';
 
 // Handle AJAX form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_message') {
@@ -23,18 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // ── SEO ───────────────────────────────────────────────────────────────────────
 $page_title       = 'Contact Xeflux | Custom Apparel Enquiries | Margao, Goa';
 $page_description = 'Contact Xeflux for custom apparel, corporate gifting, and bulk merchandise orders in India. Visit our studio in Margao, South Goa or call +91 88880 83866. We respond within 24 hours.';
-
-xf_seo([
-    'title'       => $page_title,
-    'description' => $page_description,
-    'keywords'    => 'contact xeflux, custom apparel enquiry, bulk order india, corporate gifting goa, xeflux studio margao',
-    'page_type'   => 'contact',
-    'canonical'   => '/contact.php',
-    'breadcrumbs' => [
-        ['name' => 'Home',    'url' => '/'],
-        ['name' => 'Contact', 'url' => '/contact.php'],
-    ],
-]);
+$page_keywords    = 'contact xeflux, custom apparel enquiry, bulk order india, corporate gifting goa, xeflux studio margao';
+$canonical_url    = '/contact.php';
 ?>
 <?php include 'header.html'; ?>
 

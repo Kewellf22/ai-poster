@@ -5,7 +5,6 @@
  */
 define('APP_ACCESS', true);
 require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/seo.php';
 
 if (session_status() === PHP_SESSION_NONE) session_start();
 
@@ -133,21 +132,9 @@ if ($page > 1) $canonical_url .= '&page=' . $page;
 
 $page_title       = $meta['meta_title'];
 $page_description = $meta['meta_description'];
-
-xf_seo([
-    'title'       => $page_title,
-    'description' => $page_description,
-    'keywords'    => $meta['meta_keywords'] ?? '',
-    'page_type'   => 'catalog',
-    'canonical'   => $canonical_url,
-    'breadcrumbs' => [
-        ['name' => 'Home',    'url' => '/'],
-        ['name' => 'Shop',    'url' => '/catalog.php'],
-        ['name' => $meta['professional_name'], 'url' => $canonical_url],
-    ],
-    // noindex filter pages to avoid thin-content penalties
-    'noindex'     => ($sort_by !== 'popularity' || $price_range !== 'all'),
-]);
+$page_keywords    = $meta['meta_keywords'] ?? '';
+// noindex filter pages to avoid thin-content penalties
+$noindex          = ($sort_by !== 'popularity' || $price_range !== 'all');
 
 // ── Fetch products ────────────────────────────────────────────────────────────
 $products      = [];

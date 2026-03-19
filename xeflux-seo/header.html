@@ -1,126 +1,692 @@
 <!DOCTYPE html>
 <html lang="en-IN" prefix="og: https://ogp.me/ns#">
 <head>
-    <!-- ══════════════════════════════════════
-         XEFLUX — SEO-OPTIMISED HEAD TEMPLATE
-         Replace your existing header.html with
-         this file. <?php echo $page_title ?> and
-         <?php echo $page_description ?> are set
-         per-page BEFORE including this file.
-    ══════════════════════════════════════ -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <!-- Primary Title -->
-    <title><?php echo isset($page_title) ? htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') : 'Xeflux – Premium Fashion for the Modern Generation'; ?></title>
+    <!-- ✅ PAGE TITLE & META DESCRIPTION (set per-page via $page_title / $page_description) -->
+    <title><?php echo isset($page_title) ? htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') : 'Xeflux - Premium Fashion for the Modern Generation'; ?></title>
+    <meta name="description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description, ENT_QUOTES, 'UTF-8') : "Xeflux is India's premier fashion brand offering premium custom apparel, personalised t-shirts, mugs, bottles and merchandise. Handcrafted in Goa with pan-India delivery."; ?>">
+    <meta name="keywords"    content="<?php echo isset($page_keywords) ? htmlspecialchars($page_keywords, ENT_QUOTES, 'UTF-8') : 'custom t-shirts india, personalised apparel, premium merchandise goa, custom mugs, printed clothing, xeflux fashion goa'; ?>">
+    <meta name="author"      content="Xeflux – Fluxcart E-Commerce (OPC) Private Limited">
 
-    <!-- ── SEO meta (filled by seo.php; kept here as safe fallback) ── -->
-    <meta name="description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description, ENT_QUOTES, 'UTF-8') : 'Xeflux is India\'s premier fashion brand offering premium custom apparel, personalised t-shirts, mugs, bottles and more. Handcrafted in Goa with pan-India delivery.'; ?>">
+    <!-- ✅ Robots — noindex filter/utility pages to stop duplicate-content penalty -->
+    <meta name="robots" content="<?php echo (isset($noindex) && $noindex) ? 'noindex,nofollow' : 'index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1'; ?>">
+
+    <!-- ✅ Theme / PWA -->
     <meta name="theme-color" content="#C9A96E">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <!-- ── Favicon family ── -->
-    <link rel="icon"             href="/assets/images/favicon.ico"         sizes="any">
-    <link rel="icon"             href="/assets/images/favicon.svg"         type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
-    <link rel="manifest"         href="/site.webmanifest">
+    <!-- ✅ Canonical URL — prevents duplicate-content penalties -->
+    <link rel="canonical" href="https://www.xeflux.com<?php echo isset($canonical_url) ? htmlspecialchars($canonical_url, ENT_QUOTES, 'UTF-8') : '/'; ?>">
 
-    <!-- ── Preconnect for speed ── -->
+    <?php
+    // ── Build OG/Twitter variables (safe fallbacks) ───────────────────────────
+    $xf_og_title       = isset($page_title)       ? $page_title       : 'Xeflux – Premium Custom Fashion & Merchandise';
+    $xf_og_description = isset($page_description) ? $page_description : "India's premier fashion brand – custom t-shirts, mugs, bottles and more. Pan-India delivery from ₹200.";
+    $xf_og_image       = isset($og_image)         ? $og_image         : 'https://www.xeflux.com/assets/images/og-default.jpg';
+    $xf_og_url         = 'https://www.xeflux.com' . (isset($canonical_url) ? $canonical_url : '/');
+    $xf_og_type        = isset($og_type_override) ? $og_type_override : 'website';
+    ?>
+
+    <!-- ✅ Open Graph — WhatsApp, Facebook, LinkedIn, Slack rich previews -->
+    <meta property="og:type"         content="<?php echo htmlspecialchars($xf_og_type); ?>">
+    <meta property="og:url"          content="<?php echo htmlspecialchars($xf_og_url,         ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:title"        content="<?php echo htmlspecialchars($xf_og_title,       ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:description"  content="<?php echo htmlspecialchars($xf_og_description, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:image"        content="<?php echo htmlspecialchars($xf_og_image,       ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt"    content="<?php echo htmlspecialchars($xf_og_title, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:site_name"    content="Xeflux">
+    <meta property="og:locale"       content="en_IN">
+
+    <!-- ✅ Twitter / X Card -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:site"        content="@xeflux">
+    <meta name="twitter:title"       content="<?php echo htmlspecialchars($xf_og_title,       ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($xf_og_description, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="twitter:image"       content="<?php echo htmlspecialchars($xf_og_image,       ENT_QUOTES, 'UTF-8'); ?>">
+
+    <!-- ✅ JSON-LD: Organization (present on EVERY page — establishes brand entity) -->
+    <script type="application/ld+json">
+    {
+        "@context":  "https://schema.org",
+        "@type":     "Organization",
+        "@id":       "https://www.xeflux.com/#organization",
+        "name":      "Xeflux",
+        "legalName": "Fluxcart E-Commerce (OPC) Private Limited",
+        "url":       "https://www.xeflux.com",
+        "logo": {
+            "@type": "ImageObject",
+            "url":   "https://www.xeflux.com/assets/images/xeflux-logo.png",
+            "width": 200,
+            "height": 60
+        },
+        "contactPoint": [
+            {"@type":"ContactPoint","telephone":"+91-88880-83866","contactType":"customer service","areaServed":"IN","availableLanguage":["English","Hindi"]},
+            {"@type":"ContactPoint","telephone":"+91-91759-73186","contactType":"sales","areaServed":"IN"},
+            {"@type":"ContactPoint","telephone":"+91-73978-65172","contactType":"support","areaServed":"IN"}
+        ],
+        "address": {
+            "@type":           "PostalAddress",
+            "streetAddress":   "FL NO.B-2, Near Loyola H.School, Margao, Salcete",
+            "addressLocality": "Margao",
+            "addressRegion":   "Goa",
+            "postalCode":      "403601",
+            "addressCountry":  "IN"
+        },
+        "email": "support@xeflux.com",
+        "sameAs": [
+            "https://www.instagram.com/xeflux",
+            "https://www.facebook.com/xeflux"
+        ]
+    }
+    </script>
+
+    <!-- ✅ JSON-LD: WebSite + SearchAction (enables Google Sitelinks Search Box) -->
+    <script type="application/ld+json">
+    {
+        "@context":   "https://schema.org",
+        "@type":      "WebSite",
+        "@id":        "https://www.xeflux.com/#website",
+        "url":        "https://www.xeflux.com",
+        "name":       "Xeflux",
+        "description":"Premium Custom Fashion & Merchandise – India",
+        "publisher":  {"@id":"https://www.xeflux.com/#organization"},
+        "potentialAction": {
+            "@type":       "SearchAction",
+            "target": {
+                "@type":       "EntryPoint",
+                "urlTemplate": "https://www.xeflux.com/catalog.php?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <!-- ✅ JSON-LD: LocalBusiness (strong signal for "near me" & Google Maps rank) -->
+    <script type="application/ld+json">
+    {
+        "@context":  "https://schema.org",
+        "@type":     ["LocalBusiness","ClothingStore"],
+        "@id":       "https://www.xeflux.com/#localbusiness",
+        "name":      "Xeflux",
+        "image":     "https://www.xeflux.com/assets/images/og-default.jpg",
+        "url":       "https://www.xeflux.com",
+        "telephone": "+91-88880-83866",
+        "email":     "support@xeflux.com",
+        "priceRange":"₹₹",
+        "currenciesAccepted": "INR",
+        "paymentAccepted":    "Cash, Credit Card, Debit Card, UPI, Net Banking",
+        "address": {
+            "@type":           "PostalAddress",
+            "streetAddress":   "FL NO.B-2, Near Loyola H.School, Margao, Salcete",
+            "addressLocality": "Margao",
+            "addressRegion":   "Goa",
+            "postalCode":      "403601",
+            "addressCountry":  "IN"
+        },
+        "geo": {
+            "@type":     "GeoCoordinates",
+            "latitude":  15.27357655011732,
+            "longitude": 73.95613479325408
+        },
+        "openingHoursSpecification": [
+            {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"19:00"},
+            {"@type":"OpeningHoursSpecification","dayOfWeek":["Sunday"],"opens":"10:00","closes":"17:00"}
+        ],
+        "hasMap":    "https://www.google.com/maps/dir/?api=1&destination=15.27357655011732,73.95613479325408",
+        "areaServed":"India",
+        "servesCuisine": null,
+        "sameAs": ["https://www.instagram.com/xeflux","https://www.facebook.com/xeflux"]
+    }
+    </script>
+
+    <!-- ✅ Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/images/favicon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileImage" content="assets/images/favicon.png">
+    <meta name="msapplication-TileColor" content="#0A0A0A">
+
+    <!-- ✅ Preconnect for Core Web Vitals (font loading speed) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com"    crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.google-analytics.com">
 
-    <!-- ── Google Fonts (display=swap for performance) ── -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- ✅ Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-    <!-- ── Font Awesome ── -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-          crossorigin="anonymous" referrerpolicy="no-referrer">
-
-    <!-- ── seo.php output is echoed directly above the </head> in each page ── -->
-
-    <!-- ── Google Analytics 4 (replace G-XXXXXXXXXX) ── -->
-    <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
-    </script>
-    -->
-
-    <!-- ── Global base styles ── -->
     <style>
-        /* ── Accessibility: focus ring ── */
-        :focus-visible { outline: 2px solid #C9A96E; outline-offset: 3px; }
-
-        /* ── Skip link for screen readers / Google ── */
+        :root {
+            --primary: #C9A96E;
+            --primary-light: #E0CBA0;
+            --primary-dark: #A8884D;
+            --darker: #0A0A0A;
+            --dark: #111111;
+            --charcoal: #1A1A1A;
+            --graphite: #2A2A2A;
+            --light: #FAFAF7;
+            --ivory: #F5F0E8;
+            --gold: #C9A96E;
+            --gold-light: #E0CBA0;
+            --gray: #888880;
+            --gray-light: #B8B8B0;
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-sans);
+            background: var(--darker);
+            color: var(--light);
+        }
+        /* ── Accessibility: skip link & focus ring ── */
         .skip-link {
             position: absolute;
             left: -9999px;
             top: 4px;
             z-index: 99999;
             padding: 8px 16px;
-            background: #C9A96E;
-            color: #0A0A0A;
-            font-family: 'DM Sans', sans-serif;
+            background: var(--gold);
+            color: var(--darker);
+            font-family: var(--font-sans);
             font-size: 0.85rem;
             font-weight: 600;
             text-decoration: none;
         }
         .skip-link:focus { left: 4px; }
-
-        /* ── Breadcrumb (visible on internal pages) ── */
-        .xf-breadcrumb {
+        :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+        /* ── Mobile Overlay ── */
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* ── Navigation ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            height: 72px;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.06);
+        }
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom-color: rgba(201, 169, 110, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+        /* ── Logo ── */
+        .logo {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.75rem;
+            color: var(--light);
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+        .logo-img {
+            height: 36px;
+            width: auto;
+            filter: brightness(1.1);
+            transition: var(--transition);
+        }
+        .logo:hover {
+            color: var(--gold);
+        }
+        .logo:hover .logo-img {
+            filter: brightness(1.3) drop-shadow(0 0 8px rgba(201, 169, 110, 0.3));
+        }
+        /* ── Mobile Menu Toggle ── */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+        .hamburger {
+            position: relative;
+            width: 24px;
+            height: 16px;
+        }
+        .hamburger span {
+            position: absolute;
+            width: 100%;
+            height: 1.5px;
+            background: var(--gold);
+            border-radius: 1px;
+            transition: var(--transition);
+            left: 0;
+        }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); width: 70%; }
+        .hamburger span:nth-child(3) { bottom: 0; }
+        .hamburger.active span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+        /* ── Navigation Links ── */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             list-style: none;
             margin: 0;
-            padding: 14px 5%;
-            background: #0A0A0A;
-            border-bottom: 1px solid rgba(201,169,110,0.06);
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 0;
         }
-        .xf-breadcrumb li {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.72rem;
-            letter-spacing: 1px;
-            color: #888880;
-        }
-        .xf-breadcrumb li + li::before {
-            content: '/';
-            margin-right: 8px;
-            opacity: 0.4;
-        }
-        .xf-breadcrumb a {
-            color: #888880;
+        .nav-links li a {
+            color: var(--gray-light);
             text-decoration: none;
-            transition: color 0.2s;
+            font-family: var(--font-sans);
+            font-weight: 400;
+            font-size: 0.78rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            transition: var(--transition);
+            position: relative;
         }
-        .xf-breadcrumb a:hover { color: #C9A96E; }
-        .xf-breadcrumb [aria-current="page"] { color: #C9A96E; font-weight: 500; }
+        .nav-links li a:not(.nav-cta):not(.cart-link):not(.user-profile-link)::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .nav-links li a:not(.nav-cta):not(.cart-link):not(.user-profile-link):hover::after { width: 100%; }
+        .nav-links li a:not(.nav-cta):not(.cart-link):not(.user-profile-link):hover { color: var(--gold); }
+        /* ── CTA Button ── */
+        .nav-cta {
+            background: var(--gold) !important;
+            color: var(--darker) !important;
+            padding: 0.6rem 1.6rem !important;
+            border-radius: 0 !important;
+            font-weight: 600 !important;
+            font-size: 0.7rem !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase;
+            box-shadow: none;
+            transition: var(--transition);
+        }
+        .nav-cta::after { display: none !important; }
+        .nav-cta:hover {
+            background: var(--gold-light) !important;
+            color: var(--darker) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(201, 169, 110, 0.3);
+        }
+        /* ── Cart Icon ── */
+        .cart-item { position: relative; display: block !important; }
+        .cart-link {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 0;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            background: transparent;
+            transition: var(--transition);
+        }
+        .cart-link:hover { border-color: var(--gold); background: rgba(201, 169, 110, 0.05); }
+        .cart-link::after { display: none !important; }
+        .cart-link i { font-size: 0.95rem; color: var(--gold); }
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--gold);
+            color: var(--darker);
+            font-size: 0.6rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: none;
+            transition: var(--transition);
+            border: 2px solid var(--darker);
+        }
+        /* ── User Profile Icon ── */
+        .user-profile-item { position: relative; }
+        .user-profile-link {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 0;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            background: rgba(201, 169, 110, 0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .user-profile-link:hover { border-color: var(--gold); background: rgba(201, 169, 110, 0.1); }
+        .user-profile-link::after { display: none !important; }
+        .user-profile-link i { font-size: 0.95rem; color: var(--gold); }
+        /* ── User Dropdown Menu ── */
+        .user-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: var(--charcoal);
+            border: 1px solid rgba(201, 169, 110, 0.12);
+            border-radius: 0;
+            min-width: 200px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: var(--transition);
+            z-index: 1002;
+            overflow: hidden;
+        }
+        .user-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        .user-dropdown a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: var(--transition);
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.06);
+        }
+        .user-dropdown a:last-child { border-bottom: none; }
+        .user-dropdown a:hover { background: rgba(201, 169, 110, 0.08); color: var(--gold); padding-left: 1.8rem; }
+        .user-dropdown a i { margin-right: 0.75rem; width: 16px; color: var(--gold); opacity: 0.6; }
+        .user-dropdown a:hover i { opacity: 1; }
+        /* ── Responsive: Mobile ── */
+        @media (max-width: 992px) {
+            nav { padding: 0 4%; height: 64px; }
+            .mobile-menu-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 300px;
+                height: 100vh;
+                background: var(--dark);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 6rem 2rem 2rem;
+                gap: 0;
+                box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+                transition: right 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+                overflow-y: auto;
+                border-left: 1px solid rgba(201, 169, 110, 0.08);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li { width: 100%; border-bottom: 1px solid rgba(201, 169, 110, 0.05); }
+            .nav-links li a {
+                display: block;
+                width: 100%;
+                padding: 1.1rem 0.5rem;
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+                color: var(--gray-light);
+            }
+            .nav-links li a:not(.nav-cta):not(.cart-link):not(.user-profile-link)::after { display: none; }
+            .nav-links li a:not(.nav-cta):not(.cart-link):not(.user-profile-link):hover { color: var(--gold); padding-left: 1rem; }
+            .nav-cta { margin-top: 1.5rem; text-align: center; width: 100%; padding: 0.9rem 1.5rem !important; }
+            .cart-item { order: -2; margin-bottom: 0.5rem; margin-top: 1rem; border-bottom: none !important; }
+            .user-profile-item { order: -1; margin-bottom: 0.5rem; border-bottom: none !important; }
+            .cart-link, .user-profile-link { width: 48px; height: 48px; }
+            .cart-link i, .user-profile-link i { font-size: 1.1rem; }
+            .cart-count { width: 20px; height: 20px; font-size: 0.65rem; top: -5px; right: -5px; }
+            .user-dropdown { top: 60px; right: 0; }
+        }
+        @media (max-width: 576px) {
+            nav { height: 58px; }
+            .logo { font-size: 1.2rem; letter-spacing: 2px; }
+            .logo-img { height: 30px; }
+            .nav-links { width: 100%; }
+            .cart-link, .user-profile-link { width: 44px; height: 44px; }
+            .cart-link i, .user-profile-link i { font-size: 1rem; }
+            .cart-count { width: 18px; height: 18px; font-size: 0.6rem; }
+        }
     </style>
 </head>
 <body>
-<!-- Skip to main content (accessibility + Googlebot) -->
-<a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- Accessibility: skip to main content for screen readers & Google -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-<!-- ═══════════════════════════════════════════
-     NAVIGATION — semantic nav landmark
-     ═══════════════════════════════════════════ -->
-<nav role="navigation" aria-label="Main navigation" style="position:sticky;top:0;z-index:1001;">
-    <!-- Your existing nav HTML goes here -->
-    <!-- Ensure logo has alt="Xeflux logo" and nav links are <a> tags -->
-</nav>
+    <div class="mobile-overlay"></div>
 
-<!-- ═══════════════════════════════════════════
-     MAIN CONTENT LANDMARK
-     (wrap your page body in <main id="main-content">)
-     ═══════════════════════════════════════════ -->
+    <nav role="navigation" aria-label="Main navigation">
+        <a href="default.php" class="logo" aria-label="Xeflux - go to homepage">
+            <img src="assets/images/xeflux-logo.png" alt="Xeflux premium fashion brand logo" class="logo-img" width="36" height="36">
+            Xeflux
+        </a>
+
+        <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mainNavLinks">
+            <div class="hamburger" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+
+        <ul class="nav-links" id="mainNavLinks" role="list">
+            <li><a href="default.php">Home</a></li>
+            <li><a href="catalog.php">Products</a></li>
+            <li><a href="customize.php">Customize</a></li>
+            <li><a href="Reseller.php">Reseller</a></li>
+            <li><a href="contact.php">Contact</a></li>
+            <li class="cart-item" id="cartItem">
+                <a href="cart.php" class="cart-link" aria-label="View shopping cart">
+                    <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                    <span class="cart-count" id="cartCount" aria-label="Cart items">0</span>
+                </a>
+            </li>
+            <li class="user-profile-item" id="userProfileItem" style="display: none;">
+                <a href="#" class="user-profile-link" id="userProfileBtn" aria-label="User account menu" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                </a>
+                <div class="user-dropdown" id="userDropdown" role="menu">
+                    <a href="userprofile.php" role="menuitem"><i class="fas fa-user-circle" aria-hidden="true"></i> Profile</a>
+                    <a href="settings.php"    role="menuitem"><i class="fas fa-cog"         aria-hidden="true"></i> Settings</a>
+                    <a href="orders.php"      role="menuitem"><i class="fas fa-shopping-bag" aria-hidden="true"></i> Orders</a>
+                    <a href="logout.php" onclick="deactivateSession()" role="menuitem"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout</a>
+                </div>
+            </li>
+            <li id="getStartedItem">
+                <a href="login.html" class="nav-cta" aria-label="Get started with Xeflux">Get Started</a>
+            </li>
+        </ul>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            var navLinks         = document.querySelector('.nav-links');
+            var hamburger        = document.querySelector('.hamburger');
+            var mobileOverlay    = document.querySelector('.mobile-overlay');
+            var nav              = document.querySelector('nav');
+            var userProfileBtn   = document.getElementById('userProfileBtn');
+            var userDropdown     = document.getElementById('userDropdown');
+
+            // Check session and update cart on page load
+            checkSessionStatus();
+            updateCartCount();
+
+            // User Profile Dropdown Toggle
+            if (userProfileBtn) {
+                userProfileBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var isOpen = userDropdown.classList.toggle('active');
+                    userProfileBtn.setAttribute('aria-expanded', isOpen);
+                });
+            }
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.user-profile-item')) {
+                    userDropdown.classList.remove('active');
+                    if (userProfileBtn) userProfileBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Mobile menu toggle
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    var isOpen = navLinks.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                    mobileOverlay.classList.toggle('active');
+                    mobileMenuToggle.setAttribute('aria-expanded', isOpen);
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                });
+            }
+
+            // Mobile overlay click closes menu
+            if (mobileOverlay) {
+                mobileOverlay.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    mobileOverlay.classList.remove('active');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                });
+            }
+
+            // Close menu when clicking nav links
+            document.querySelectorAll('.nav-links a:not(.cart-link):not(.user-profile-link)').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    mobileOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                    userDropdown.classList.remove('active');
+                });
+            });
+
+            // Scroll effect on nav
+            window.addEventListener('scroll', function() {
+                nav.classList.toggle('scrolled', window.scrollY > 50);
+            }, { passive: true });
+
+            // Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        hamburger.classList.remove('active');
+                        mobileOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                    userDropdown.classList.remove('active');
+                }
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 992) {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    mobileOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }, { passive: true });
+        });
+
+        function checkSessionStatus() {
+            fetch('check_session.php')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var userProfileItem = document.getElementById('userProfileItem');
+                    var getStartedItem  = document.getElementById('getStartedItem');
+                    if (data.isLoggedIn) {
+                        if (userProfileItem) userProfileItem.style.display = 'block';
+                        if (getStartedItem)  getStartedItem.style.display  = 'none';
+                    } else {
+                        if (userProfileItem) userProfileItem.style.display = 'none';
+                        if (getStartedItem)  getStartedItem.style.display  = 'block';
+                    }
+                })
+                .catch(function() {
+                    var getStartedItem = document.getElementById('getStartedItem');
+                    if (getStartedItem) getStartedItem.style.display = 'block';
+                });
+        }
+
+        function updateCartCount() {
+            fetch('get_cart_count.php')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var cartCountEl = document.getElementById('cartCount');
+                    var cartItemEl  = document.getElementById('cartItem');
+                    if (cartCountEl && cartItemEl) {
+                        var count = parseInt(data.count) || 0;
+                        cartCountEl.textContent = count;
+                        cartCountEl.setAttribute('aria-label', count + ' items in cart');
+                        cartItemEl.style.display = count > 0 ? 'block' : 'none';
+                    }
+                })
+                .catch(function() {
+                    var cartItemEl = document.getElementById('cartItem');
+                    if (cartItemEl) cartItemEl.style.display = 'block';
+                });
+        }
+
+        function deactivateSession() {
+            fetch('deactivate_session.php', { method: 'POST' })
+                .then(function(r) { return r.json(); })
+                .then(function(data) { if (data.success) location.href = 'default.php'; })
+                .catch(function(e) { console.error('Error deactivating session:', e); });
+        }
+
+        // Global access
+        window.updateCartCount  = updateCartCount;
+        window.deactivateSession = deactivateSession;
+    </script>
+</body>
+</html>

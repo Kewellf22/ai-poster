@@ -6,21 +6,10 @@
 session_start();
 
 // ── SEO setup (BEFORE header.html) ───────────────────────────────────────────
-require_once __DIR__ . '/seo.php';
-
 $page_title       = 'Xeflux – Premium Custom Fashion | T-Shirts, Mugs & Merchandise | Goa, India';
 $page_description = 'Xeflux offers premium custom apparel and personalised merchandise in India — custom t-shirts, mugs, bottles, caps, keychains & more. Handcrafted quality with pan-India delivery. Starting ₹200.';
-
-xf_seo([
-    'title'       => $page_title,
-    'description' => $page_description,
-    'keywords'    => 'custom t-shirts india, personalised apparel, premium merchandise goa, custom mugs, printed clothing, xeflux, fashion goa, custom gifts india',
-    'page_type'   => 'home',
-    'canonical'   => '/',
-    'breadcrumbs' => [
-        ['name' => 'Home', 'url' => '/'],
-    ],
-]);
+$page_keywords    = 'custom t-shirts india, personalised apparel, premium merchandise goa, custom mugs, printed clothing, xeflux, fashion goa, custom gifts india';
+$canonical_url    = '/';
 ?>
 <?php include 'header.html'; ?>
 
