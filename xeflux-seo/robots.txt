@@ -1,0 +1,47 @@
+# ─────────────────────────────────────────
+# Xeflux robots.txt
+# https://www.xeflux.com/robots.txt
+# ─────────────────────────────────────────
+
+User-agent: *
+Allow: /
+
+# Block admin / backend paths
+Disallow: /admin/
+Disallow: /config.php
+Disallow: /includes/
+Disallow: /tmp/
+Disallow: /cache/
+Disallow: /logs/
+Disallow: /vendor/
+Disallow: /node_modules/
+
+# Block internal utility pages
+Disallow: /cart.php
+Disallow: /checkout.php
+Disallow: /order-success.php
+Disallow: /order-failed.php
+Disallow: /my-account.php
+Disallow: /login.php
+Disallow: /register.php
+
+# Block duplicate / filter URLs that create thin content
+Disallow: /catalog.php?sort=
+Disallow: /catalog.php?price_range=
+
+# Allow important assets for rendering
+Allow: /assets/
+Allow: /assets/images/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.webp
+Allow: /*.svg
+
+# Crawl delay (be polite)
+Crawl-delay: 2
+
+# Sitemap location
+Sitemap: https://www.xeflux.com/sitemap.xml
+Sitemap: https://www.xeflux.com/sitemap-products.xml

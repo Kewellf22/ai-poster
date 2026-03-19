@@ -1,0 +1,42 @@
+{
+  "name": "Xeflux – Premium Custom Fashion",
+  "short_name": "Xeflux",
+  "description": "Premium custom apparel and merchandise – personalised t-shirts, mugs, bottles and more. Handcrafted in Goa, delivered across India.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#C9A96E",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "lifestyle"],
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/assets/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Shop Now",
+      "short_name": "Shop",
+      "description": "Browse Xeflux premium collection",
+      "url": "/catalog.php",
+      "icons": [{ "src": "/assets/images/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Customize",
+      "short_name": "Design",
+      "description": "Create your custom design",
+      "url": "/customize.php",
+      "icons": [{ "src": "/assets/images/icon-96.png", "sizes": "96x96" }]
+    }
+  ]
+}

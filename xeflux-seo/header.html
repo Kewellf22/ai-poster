@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-IN" prefix="og: https://ogp.me/ns#">
+<head>
+    <!-- ══════════════════════════════════════
+         XEFLUX — SEO-OPTIMISED HEAD TEMPLATE
+         Replace your existing header.html with
+         this file. <?php echo $page_title ?> and
+         <?php echo $page_description ?> are set
+         per-page BEFORE including this file.
+    ══════════════════════════════════════ -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <!-- Primary Title -->
+    <title><?php echo isset($page_title) ? htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') : 'Xeflux – Premium Fashion for the Modern Generation'; ?></title>
+
+    <!-- ── SEO meta (filled by seo.php; kept here as safe fallback) ── -->
+    <meta name="description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description, ENT_QUOTES, 'UTF-8') : 'Xeflux is India\'s premier fashion brand offering premium custom apparel, personalised t-shirts, mugs, bottles and more. Handcrafted in Goa with pan-India delivery.'; ?>">
+    <meta name="theme-color" content="#C9A96E">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- ── Favicon family ── -->
+    <link rel="icon"             href="/assets/images/favicon.ico"         sizes="any">
+    <link rel="icon"             href="/assets/images/favicon.svg"         type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+    <link rel="manifest"         href="/site.webmanifest">
+
+    <!-- ── Preconnect for speed ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com"    crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+    <!-- ── Google Fonts (display=swap for performance) ── -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- ── Font Awesome ── -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- ── seo.php output is echoed directly above the </head> in each page ── -->
+
+    <!-- ── Google Analytics 4 (replace G-XXXXXXXXXX) ── -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+    </script>
+    -->
+
+    <!-- ── Global base styles ── -->
+    <style>
+        /* ── Accessibility: focus ring ── */
+        :focus-visible { outline: 2px solid #C9A96E; outline-offset: 3px; }
+
+        /* ── Skip link for screen readers / Google ── */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 4px;
+            z-index: 99999;
+            padding: 8px 16px;
+            background: #C9A96E;
+            color: #0A0A0A;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .skip-link:focus { left: 4px; }
+
+        /* ── Breadcrumb (visible on internal pages) ── */
+        .xf-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 14px 5%;
+            background: #0A0A0A;
+            border-bottom: 1px solid rgba(201,169,110,0.06);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .xf-breadcrumb li {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            color: #888880;
+        }
+        .xf-breadcrumb li + li::before {
+            content: '/';
+            margin-right: 8px;
+            opacity: 0.4;
+        }
+        .xf-breadcrumb a {
+            color: #888880;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .xf-breadcrumb a:hover { color: #C9A96E; }
+        .xf-breadcrumb [aria-current="page"] { color: #C9A96E; font-weight: 500; }
+    </style>
+</head>
+<body>
+<!-- Skip to main content (accessibility + Googlebot) -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION — semantic nav landmark
+     ═══════════════════════════════════════════ -->
+<nav role="navigation" aria-label="Main navigation" style="position:sticky;top:0;z-index:1001;">
+    <!-- Your existing nav HTML goes here -->
+    <!-- Ensure logo has alt="Xeflux logo" and nav links are <a> tags -->
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     MAIN CONTENT LANDMARK
+     (wrap your page body in <main id="main-content">)
+     ═══════════════════════════════════════════ -->

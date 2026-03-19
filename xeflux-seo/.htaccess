@@ -1,0 +1,118 @@
+# ════════════════════════════════════════════════════════
+# Xeflux .htaccess — SEO, Performance & Security
+# Place this at your website root: /public_html/.htaccess
+# ════════════════════════════════════════════════════════
+
+Options -Indexes
+ServerSignature Off
+
+# ── Enable mod_rewrite ───────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 1. Force HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # 2. Remove www (canonical: non-www)
+    #    Comment this out if you prefer www
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+    # 3. Remove trailing slash (except root)
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # 4. Sitemap convenience redirect
+    RewriteRule ^sitemap\.xml$           /sitemap.php?type=main   [L,QSA]
+    RewriteRule ^sitemap-products\.xml$  /sitemap.php?type=main   [L,QSA]
+    RewriteRule ^sitemap-images\.xml$    /sitemap.php?type=images [L,QSA]
+
+    # 5. Pretty product URLs (optional — needs product.php support)
+    #    /product/custom-tshirt-blue → /product.php?slug=custom-tshirt-blue
+    RewriteRule ^product/([a-zA-Z0-9\-]+)/?$ /product.php?slug=$1 [L,QSA]
+
+    # 6. Block bad bots / scrapers
+    RewriteCond %{HTTP_USER_AGENT} (libwww-perl|wget|python|nikto|curl|scan|java|winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner) [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} ^$ [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# ── Security Headers ─────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options    "nosniff"
+    Header always set X-Frame-Options           "SAMEORIGIN"
+    Header always set X-XSS-Protection         "1; mode=block"
+    Header always set Referrer-Policy           "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy        "geolocation=(), microphone=(), camera=()"
+    # Remove server info
+    Header unset Server
+    Header unset X-Powered-By
+    Header always unset X-Powered-By
+</IfModule>
+
+# ── Browser Caching (Core Web Vitals) ───────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault                          "access plus 1 month"
+
+    # HTML — short cache so changes show quickly
+    ExpiresByType text/html                 "access plus 1 hour"
+
+    # CSS / JS
+    ExpiresByType text/css                  "access plus 1 year"
+    ExpiresByType application/javascript    "access plus 1 year"
+    ExpiresByType text/javascript           "access plus 1 year"
+
+    # Images
+    ExpiresByType image/jpeg                "access plus 1 year"
+    ExpiresByType image/png                 "access plus 1 year"
+    ExpiresByType image/webp                "access plus 1 year"
+    ExpiresByType image/gif                 "access plus 1 year"
+    ExpiresByType image/svg+xml             "access plus 1 year"
+    ExpiresByType image/x-icon              "access plus 1 year"
+    ExpiresByType image/vnd.microsoft.icon  "access plus 1 year"
+
+    # Fonts
+    ExpiresByType font/woff                 "access plus 1 year"
+    ExpiresByType font/woff2                "access plus 1 year"
+    ExpiresByType application/font-woff     "access plus 1 year"
+    ExpiresByType application/font-woff2    "access plus 1 year"
+
+    # Data
+    ExpiresByType application/json          "access plus 0 seconds"
+    ExpiresByType application/xml           "access plus 1 hour"
+    ExpiresByType text/xml                  "access plus 1 hour"
+</IfModule>
+
+# ── GZIP Compression (reduces page size ~70%) ───────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE font/woff
+    AddOutputFilterByType DEFLATE font/woff2
+</IfModule>
+
+# ── Protect sensitive files ──────────────────────────────
+<FilesMatch "(^\.htaccess|config\.php|\.env|composer\.json|package\.json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ── Custom error pages ───────────────────────────────────
+ErrorDocument 404 /404.php
+ErrorDocument 500 /500.php
+
+# ── Prevent image hotlinking (saves bandwidth) ──────────
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^https?://(www\.)?xeflux\.com/ [NC]
+    RewriteRule \.(jpg|jpeg|png|gif|webp)$ - [F,NC,L]
+</IfModule>
